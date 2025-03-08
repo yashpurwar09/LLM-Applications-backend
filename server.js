@@ -13,14 +13,18 @@ app.listen(3000, ()=>{
 
 app.get("/", async (req, res)=>{
     const chatmsg = req.query.chatmsg;
-    const output = await chat(chatmsg);
-    res.send(output);
+    if(chatmsg){
+        const output = await chat(chatmsg);
+        res.send(output);
+    }
 });
 
 app.get("/rag", async (req, res)=>{
     let inputs = { question: req.query.question};
+    if(inputs){
     const result = await graph.invoke(inputs);
     res.send(result['answer'])
+    }
 })
 
 app.get("/LangConverter", async (req, res)=>{
